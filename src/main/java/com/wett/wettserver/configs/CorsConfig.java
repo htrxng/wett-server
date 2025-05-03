@@ -10,13 +10,12 @@ public class CorsConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
-            @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")  // Apply to all endpoints
-                    .allowedOrigins("http://localhost:8081", "http://localhost:8080")  // Allow Vue.js frontend
-                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // Allowed methods
-                    .allowedHeaders("*")  // Allow all headers
-                    .allowCredentials(true); // Required for Cookies/JWT
+                registry.addMapping("/**")
+                    .allowedOriginPatterns("*")
+                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                    .allowedHeaders("*")
+                    .allowCredentials(true);
             }
         };
     }

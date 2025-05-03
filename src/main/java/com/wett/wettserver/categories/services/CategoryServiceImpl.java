@@ -7,24 +7,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
-    @PostConstruct
-    public void init() {
-        if (categoryRepository.count() == 0) {
-            categoryRepository.saveAll(List.of(
-                new Category(UUID.randomUUID().toString(), "Guitar"),
-                new Category(UUID.randomUUID().toString(), "Violin"),
-                new Category(UUID.randomUUID().toString(), "Part"),
-                new Category(UUID.randomUUID().toString(), "Preamp")
-            ));
-        }
-    }
+//    @PostConstruct
+//    public void init() {
+//        if (categoryRepository.count() == 0) {
+//            categoryRepository.saveAll(List.of(
+//                new Category(UUID.randomUUID().toString(), "Guitar"),
+//                new Category(UUID.randomUUID().toString(), "Violin"),
+//                new Category(UUID.randomUUID().toString(), "Part"),
+//                new Category(UUID.randomUUID().toString(), "Preamp")
+//            ));
+//        }
+//    }
 
     @Override
     public Category save(Category category) {

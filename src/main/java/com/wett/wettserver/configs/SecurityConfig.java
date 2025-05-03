@@ -12,28 +12,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())  // Disable CSRF for API requests
-            .cors(cors -> cors.disable())  // Disable CORS (since we configured it separately)
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.PUT,
-                    "/v1/product/**"
-                ).permitAll()
-                .requestMatchers(HttpMethod.POST,
-                    "/v1/product/**"
-                ).permitAll()
-                .requestMatchers(HttpMethod.DELETE,
-                    "/v1/product/**"
-                ).permitAll()
-                .requestMatchers(HttpMethod.OPTIONS,
-                    "/v1/product/**"
-                ).permitAll()
-                .requestMatchers(HttpMethod.GET,
-                    "/v1/**",
-                    "/v1/categories/**",
-                    "/v1/products/**",
-                    "/v1/product/**"
-                ).permitAll()  // Allow this endpoint
-                .anyRequest().authenticated()  // Secure other endpoints
+                .requestMatchers("/v1/product/**", "/v1/products/**", "/v1/categories/**").permitAll()
+                .anyRequest().authenticated()
             );
         return http.build();
     }
