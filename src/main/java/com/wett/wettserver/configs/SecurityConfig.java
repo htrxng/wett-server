@@ -15,7 +15,14 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/v1/product/**", "/v1/products/**", "/v1/categories/**").permitAll()
+                .requestMatchers(
+                    "/v1/product",
+                    "/v1/product/**",
+                    "/v1/products",
+                    "/v1/products/**",
+                    "/v1/categories",
+                    "/v1/categories/**"
+                ).permitAll()
                 .anyRequest().authenticated()
             );
         return http.build();
