@@ -33,8 +33,10 @@ public class ProductResponse {
     public ProductResponse(Product product, Category category) {
         this.id = product.getId();
         this.name = product.getName();
-        this.categoryId = category.getId();
-        this.categoryName = category.getName();
+        if (category != null) {
+            this.categoryId = category.getId();
+            this.categoryName = category.getName();
+        }
         this.shortDescription = product.getShortDescription();
         this.description = product.getDescription();
         this.features = product.getFeatures();
