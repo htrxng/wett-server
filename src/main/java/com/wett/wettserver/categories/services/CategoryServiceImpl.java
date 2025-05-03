@@ -13,18 +13,6 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
-//    @PostConstruct
-//    public void init() {
-//        if (categoryRepository.count() == 0) {
-//            categoryRepository.saveAll(List.of(
-//                new Category(UUID.randomUUID().toString(), "Guitar"),
-//                new Category(UUID.randomUUID().toString(), "Violin"),
-//                new Category(UUID.randomUUID().toString(), "Part"),
-//                new Category(UUID.randomUUID().toString(), "Preamp")
-//            ));
-//        }
-//    }
-
     @Override
     public Category save(Category category) {
         return categoryRepository.save(category);
