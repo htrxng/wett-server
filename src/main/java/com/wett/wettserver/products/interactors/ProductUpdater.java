@@ -18,6 +18,7 @@ public class ProductUpdater {
         existingProduct.setPrice(product.getPrice());
         existingProduct.setDetails(product.getDetails());
         existingProduct.setCategoryId(product.getCategoryId());
+        existingProduct.setVisibleOnHomePage(product.getVisibleOnHomePage());
 
         if (photoUrls != null && !photoUrls.isEmpty()) {
             existingProduct.setPhotos(photoUrls);

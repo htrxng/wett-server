@@ -11,4 +11,6 @@ public interface ProductRepository extends MongoRepository<Product, String> {
     List<Product> findAllByActiveIsTrue();
 
     List<Product> findAllByActiveIsTrueAndCategoryIdEquals(String categoryId);
+
+    List<Product> findAllByVisibleOnHomePageIsTrueAndActiveIsTrue();
 }

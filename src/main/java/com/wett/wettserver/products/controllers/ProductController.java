@@ -41,26 +41,36 @@ public class ProductController {
         return new ResponseEntity<>(productResponses, HttpStatus.OK);
     }
 
-    @GetMapping("/products-by-category/{category-id}")
-    public ResponseEntity<List<ProductResponse>> getAllProductsByCategoryId(
-        @PathVariable("category-id") String categoryId
-    ) {
-        List<Product> allProducts = productService.getProductsByCategoryId(categoryId);
+    @GetMapping("/outstanding-products")
+    public ResponseEntity<List<ProductResponse>> getOutstandingProducts() {
+        List<Product> outstandingProducts = productService.getOutstandingProducts();
 
         List<Category> categories = categoryService.findAll();
 
-        List<ProductResponse> productResponses = allProducts.stream()
+        List<ProductResponse> productResponses = outstandingProducts.stream()
             .map(product -> new ProductResponse(product, getCorrespondingCategory(product.getCategoryId(), categories)))
             .toList();
 
         return new ResponseEntity<>(productResponses, HttpStatus.OK);
     }
 
-    private Category getCorrespondingCategory(
-        String categoryId, List<Category> categories) {
-        return categories.stream()
-            .filter(category -> Objects.equals(category.getId(), categoryId))
-            .findFirst().orElse(null);
+    @GetMapping("/products-by-category/{category-name}")
+    public ResponseEntity<List<ProductResponse>> getAllProductsByCategoryId(
+        @PathVariable("category-name") String categoryName
+    ) {
+        Category correspondingCategory = categoryService.findByName(categoryName);
+
+        if (correspondingCategory != null) {
+            List<Product> allProducts = productService.getProductsByCategoryId(correspondingCategory.getId());
+
+            List<ProductResponse> productResponses = allProducts.stream()
+                .map(product -> new ProductResponse(product, correspondingCategory))
+                .toList();
+
+            return new ResponseEntity<>(productResponses, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/product/{product-id}")
@@ -115,5 +125,25 @@ public class ProductController {
         Product deletedProduct = productService.saveProduct(existingProduct);
 
         return new ResponseEntity<>(deletedProduct, HttpStatus.OK);
+    }
+
+    @PutMapping("/product/{product-id}/mark-as-visible-on-home-page")
+    public ResponseEntity<Product> markProductAsVisibleOnHomePage(
+        @PathVariable(name = "product-id") String productId
+    ) {
+        Product existingProduct = productService.getProductById(productId);
+
+        existingProduct.setVisibleOnHomePage(true);
+
+        Product updatedProduct = productService.saveProduct(existingProduct);
+
+        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+    }
+
+    private Category getCorrespondingCategory(
+        String categoryId, List<Category> categories) {
+        return categories.stream()
+            .filter(category -> Objects.equals(category.getId(), categoryId))
+            .findFirst().orElse(null);
     }
 }

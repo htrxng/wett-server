@@ -10,4 +10,6 @@ public interface CategoryService {
     List<Category> findAll();
 
     Category findById(String id);
+
+    Category findByName(String categoryName);
 }

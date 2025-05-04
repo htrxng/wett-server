@@ -12,4 +12,6 @@ public interface ProductService {
     List<Product> getProductsByCategoryId(String categoryId);
 
     Product saveProduct(Product product);
+
+    List<Product> getOutstandingProducts();
 }

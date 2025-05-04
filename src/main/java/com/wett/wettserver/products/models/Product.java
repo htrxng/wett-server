@@ -30,6 +30,8 @@ public class Product {
 
     List<String> photos;
 
+    Boolean visibleOnHomePage;
+
     Boolean active;
 
     Long createdAt;

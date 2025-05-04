@@ -2,7 +2,6 @@ package com.wett.wettserver.categories.services;
 
 import com.wett.wettserver.categories.models.Category;
 import com.wett.wettserver.categories.repositories.CategoryRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +25,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findById(String id) {
         return categoryRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Category findByName(String categoryName) {
+        return categoryRepository.findByNameLikeIgnoreCaseAndActiveIsTrue(categoryName);
     }
 }
