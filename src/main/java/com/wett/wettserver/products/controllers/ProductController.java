@@ -55,7 +55,7 @@ public class ProductController {
     }
 
     @GetMapping("/products-by-category/{category-name}")
-    public ResponseEntity<List<ProductResponse>> getAllProductsByCategoryId(
+    public ResponseEntity<List<ProductResponse>> getAllProductsByCategoryName(
         @PathVariable("category-name") String categoryName
     ) {
         Category correspondingCategory = categoryService.findByName(categoryName);
