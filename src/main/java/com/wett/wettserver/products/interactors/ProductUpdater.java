@@ -15,6 +15,7 @@ public class ProductUpdater {
         existingProduct.setName(product.getName());
         existingProduct.setShortDescription(product.getShortDescription());
         existingProduct.setDescription(product.getDescription());
+        existingProduct.setFeatures(product.getFeatures());
         existingProduct.setPrice(product.getPrice());
         existingProduct.setDetails(product.getDetails());
         existingProduct.setCategoryId(product.getCategoryId());
