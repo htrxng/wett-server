@@ -33,4 +33,17 @@ public class MultipleFileUploader {
 
         return photos;
     }
+
+    public String uploadFile(MultipartFile file) {
+        if (file == null) {
+            return null;
+        }
+
+        try {
+            Map<String, String> result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+            return result.get("secure_url");
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to upload photo: " + file.getOriginalFilename());
+        }
+    }
 }

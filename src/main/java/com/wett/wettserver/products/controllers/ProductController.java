@@ -8,6 +8,7 @@ import com.wett.wettserver.common.files.interactors.MultipleFileUploader;
 import com.wett.wettserver.products.interactors.ProductUpdater;
 import com.wett.wettserver.products.models.Product;
 import com.wett.wettserver.products.representation_models.ProductResponse;
+import com.wett.wettserver.products.representation_models.UpdatingProductRequest;
 import com.wett.wettserver.products.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -98,9 +99,10 @@ public class ProductController {
 
     @PutMapping("/product")
     public ResponseEntity<Product> updateProduct(
-        @RequestPart("product") Product product,
+        @RequestPart("updating-product-request") UpdatingProductRequest updatingProductRequest,
         @RequestPart("photos") @Nullable MultipartFile[] productPhotoFiles
     ) {
+        Product product = updatingProductRequest.getProduct();
         Product existingProduct = productService.getProductById(product.getId());
 
         List<String> newPhotoUrls = new ArrayList<>();
@@ -109,7 +111,7 @@ public class ProductController {
         }
 
         ProductUpdater updater = new ProductUpdater(existingProduct);
-        Product updated = productService.saveProduct(updater.update(product, newPhotoUrls));
+        Product updated = productService.saveProduct(updater.update(updatingProductRequest, newPhotoUrls));
 
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
